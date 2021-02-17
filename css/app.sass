@@ -1,3 +1,8 @@
+body
+  position: relative
+  overflow: visible
+.noScroll
+  overflow: hidden
 .container
   width: 1140px
   margin: 0 auto
@@ -29,8 +34,7 @@ button
   &:hover
     cursor: pointer
     background: #ff9a9e
-.hidden
-  display: none
+
 .input
   display: flex
   flex-direction: column
@@ -99,4 +103,48 @@ textarea
 .geolocation
   width: 200px
   right: 200px
+
+.bigText__inner
+  font-size: 30px
+
+.topButton
+  position: absolute
+  width: 40px
+  height: 40px
+  background: #dcdade
+  bottom: 100px
+  right: -200px
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center 
+
+#parrentDiv
+  width: 200px
+  height: 200px
+  background: red
+  display: flex
+  justify-content: center
+  align-items: center
+#childDiv
+  width: 100px
+  height: 100px
+  background: yellow
+
+#popUpWindow
+  position: absolute
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  background: rgba(106, 104, 108, 0.7)
+  z-index: 9999
+  //overflow: hidden
+
+.hidden
+  display: none
+
+
+
   
