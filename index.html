@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" onmousemove="catchCoordinate(event)">
 
 <head>
   <meta charset="UTF-8" />
@@ -9,30 +9,318 @@
 </head>
 
 <body>
-  <section class="tasks">
+  <div id="popUpWindow" class="hidden"></div>
+  <section class="tasks" id="tasks">
     <div class="container">
       <div class="tasks__inner">
+        <h1>Level-1-2-js</h1>
         <ul>
-          <li> <a href="tasks/task1.html" target="a_blank">Task1 - three varaints of hidden black square</a> </li>
-          <li> <a href="tasks/task2.html" target="a_blank">Task2 - the black square hides using the "toggle" function</a> </li>
-          <li> <a href="tasks/task3.html" target="a_blank">Task3 - five black squares hide using the "toggle" function</a> </li>
-          <li> <a href="tasks/task4.html" target="a_blank">Task4 - show/hide input selector</a> </li>
-          <li> <a href="tasks/task5.html" target="a_blank">Task5 - change click button function</a> </li>
-          <li> <a href="tasks/task6.html" target="a_blank">Task6 - button mouseover/mouseout events</a> </li>
-          <li> <a href="tasks/task7.html" target="a_blank">Task7 - focus on the input</a> </li>
-          <li> <a href="tasks/task8.html" target="a_blank">Task8 - get image by link</a> </li>
-          <li> <a href="tasks/task9.html" target="a_blank">Task9 - get images by links</a> </li>
-          <li> <a href="tasks/task10.html" target="a_blank">Task10 - get mouse coordinates</a> </li> 
-          <li> <a href="tasks/task11.html" target="a_blank">Task11 - language of browser</a> </li>
-          <li> <a href="tasks/task12.html" target="a_blank">Task12 - user physical coordinates</a> </li> 
-          <li> <a href="tasks/task13.html" target="a_blank">Task13 - save user data between browser sessions</a> </li>
-          <li> <a href="tasks/task14.html" target="a_blank">Task14 - return button</a> </li>
-          <li> <a href="tasks/task15.html" target="a_blank">Task15 - two nested blocks create separate mouse listeners</a> </li>  
-          <li> <a href="tasks/task16.html" target="a_blank">Task16 - pop-up square with no scrolling</a> </li>      
+          <li>
+            <a href="#task1">Task1 - three varaints of hidden black square</a>
+          </li>
+          <li>
+            <a href="#task2">Task2 - the black square shows/hides using the "toggle" function</a>
+          </li>
+          <li>
+            <a href="#task3">Task3 - five black squares show/hide using the "toggle" function</a>
+          </li>
+          <li>
+            <a href="#task4">Task4 - show/hide selector equal value from the input field </a>
+          </li>
+          <li>
+            <a href="#task5">Task5 - change click function</a>
+          </li>
+          <li>
+            <a href="#task6">Task6 - mouseover/mouseout events</a>
+          </li>
+          <li>
+            <a href="#task7">Task7 - focus on the input</a>
+          </li>
+          <li>
+            <a href="#task8">Task8 - get image by link</a>
+          </li>
+          <li>
+            <a href="#task9">Task9 - get images by links</a>
+          </li>
+          <li>
+            <a href="#task10">Task10 - get mouse coordinates</a>
+          </li>
+          <li>
+            <a href="#task11">Task11 - language of browser</a>
+          </li>
+          <li>
+            <a href="#task12">Task12 - user's physical coordinates</a>
+          </li>
+          <li>
+            <a href="#task13">Task13 - save user data between browser sessions</a>
+          </li>
+          <li>
+            <a href="#task14">Task14 - return on top page button</a>
+          </li>
+          <li>
+            <a href="#task15">Task15 - two nested blocks create separate mouse listeners</a>
+          </li>
+          <li>
+            <a href="#task16">Task16 - pop-up square with no scrolling</a>
+          </li>
+          <li>
+            <a href="#task17">Task17 - form submit without upload</a>
+          </li>
+          <li>
+            <a href="#task18">Task18 - drag and drop input file</a>
+          </li>
+        </ul>
+
+        <!--TASK#1-->
+        <div id="task1" class="block_tasks">
+          <hr />
+
+          <h2>Task1 - three varaints of hidden black square</h2>
+          <div id="black"></div>
+          <div class="buttons">
+            <button class="btn-first" onclick="displayNone()">
+              display: none
+            </button>
+
+            <button class="btn-second" onclick="removeElemFromJs()">
+              js
+            </button>
+
+            <button class="btn-third" onclick="addClassForHiddenElem()">
+              css+js
+            </button>
+          </div>
+
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#2-->
+        <div id="task2" class="block_tasks">
+          <hr />
+          <h2>Task2 - the black square shows/hides using the "toggle" function</h2>
+          <div id="black2"></div>
+
+          <button onclick="toggleFunction()">start</button>
+
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#3-->
+        <div id="task3" class="block_tasks">
+          <hr />
+          <h2>Task3 - five black squares show/hide using the "toggle" function</h2>
+
+          <div class="squares">
+            <div class="blackSquare"></div>
+            <div class="blackSquare"></div>
+            <div class="blackSquare"></div>
+            <div class="blackSquare"></div>
+            <div class="blackSquare"></div>
+          </div>
+
+          <button onclick="toggleFunctionForSomeElements()">
+            start
+          </button>
+
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#4-->
+        <div id="task4" class="block_tasks">
+          <hr />
+          <h2>Task4 - show/hide selector equal value from the input field</h2>
+          <div class="input">
+            <label>Input selector: </label>
+            <input id="inputSelector" type="text" value="label">
+          </div>
+
+          <button onclick="checkSelector()">
+            start
+          </button>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#5-->
+        <div id="task5" class="block_tasks">
+          <hr />
+          <h2>Task5 - change click function</h2>
+          <div id="yellow" onclick="changeFunction()"></div>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#6-->
+        <div id="task6" class="block_tasks">
+          <hr />
+          <h1>Task6 - mouseover/mouseout events </h1>
+          <div id="red" class="hidden"></div>
+
+          <button onmouseover="mouseOver()" onmouseout="mouseOut()">
+            start
+          </button>
+
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#7-->
+        <div id="task7" class="block_tasks">
+          <hr />
+          <h2>Task7 - focus on the input</h2>
+          <div id="green" class="hidden"></div>
+          <div class="input">
+            <label>Input selector: </label>
+            <input type="text" onfocus="getFocus()" onkeydown="startPrint()">
+          </div>
+
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#8-->
+        <div id="task8" class="block_tasks">
+          <hr />
+          <h2>Task8 - get image by link</h2>
+          <div class="input">
+            <label>Input selector: </label>
+            <input id="imgLink" type="text" value="https://picsum.photos/200/300">
+          </div>
+
+          <button onclick="getImage()">
+            start
+          </button>
+
+          <div class="image" id="image">
+          </div>
+
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#9-->
+        <div id="task9" class="block_tasks">
+          <hr />
+          <h2>Task9 - get images by links</h2>
+          <div class="input">
+            <label>Input selector: </label>
+            <textarea id="textAreaTask9"
+              name="textArea">https://picsum.photos/300/300 https://loremflickr.com/300/300 https://www.fillmurray.com/300/300</textarea>
+          </div>
+
+          <button onclick="getImages()">
+            start
+          </button>
+
+          <div class="images" id="images">
+          </div>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#10-->
+        <div id="task10" class="block_tasks">
+          <hr />
+          <h2>Task10 - get mouse coordinates</h2>
+          <p class="releaseMes">Release see on the top page )</p>
+          <div class="coordinates" id="coordinates" data-tooltip="Task#10">
+            <p id="xCoord">X: 0</p>
+            <p id="yCoord">Y: 0</p>
+          </div>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#11-->
+        <div id="task11" class="block_tasks">
+          <hr />
+          <h2>Task11 - language of browser</h2>
+          <p class="releaseMes">Release see on the top page )</p>
+          <div class="lang" data-tooltip="Task#11">
+            <p id="lang"></p>
+          </div>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#12-->
+        <div id="task12" class="block_tasks">
+          <hr />
+          <h2>Task12 - user's physical coordinates</h2>
+          <p class="releaseMes">Release see on the top page )</p>
+          <div class="geolocation" id="geolocation" data-tooltip="Task#12">
+            <p id="lantitude"></p>
+            <p id="longitude"></p>
+          </div>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#13-->
+        <div id="task13" class="block_tasks">
+          <hr />
+          <h1>Task13 - save user data between browser sessions</h1>
+          <div class="input">
+            <label>Input data (LocalStorage): </label>
+            <textarea id="textForLocalStorage" onkeyup="inputData()"></textarea>
+          </div>
+
+          <div class="input">
+            <label>Input data (Cookies): </label>
+            <textarea id="textForCookies" onkeyup="inputData()"></textarea>
+          </div>
+
+          <div class="input">
+            <label>Input data (SessionStorage): </label>
+            <textarea id="textForSessionStorage" onkeyup="inputData()"></textarea>
+          </div>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#14-->
+        <div id="task14" class="block_tasks">
+          <hr />
+          <h2>Task14 - return on top page button</h2>
+          <p class="releaseMes">Release see on the bottom page )</p>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#15-->
+        <div id="task15" class="block_tasks">
+          <hr />
+          <h2>Task15 - two nested blocks create separate mouse listeners</h2>
+          <div id="parrentDiv">
+            <div id="childDiv">
+
+            </div>
+          </div>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#16-->
+        <div id="task16" class="block_tasks">
+          <hr />
+          <h2>Task16 - pop-up square with no scrolling</h2>
+          <button id="popUpCall">call popUp</button>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#17-->
+        <div id="task17" class="block_tasks">
+          <hr />
+          <h2>Task17 - form submit without upload</h2>
+          <form id="taskForm" onsubmit="return false">
+            <input class="submitButton" type="submit" value="GO">
+          </form>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <!--TASK#18-->
+        <div id="task18" class="block_tasks">
+          <hr />
+          <h2>Task18 - drag and drop input file</h2>
+          <p class="releaseMes">COMING SOON!!!</p>
+          <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <a id="topButton" class="topButton hidden" href="#top">top</a>
       </div>
     </div>
   </section>
+
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/app.js"></script>
 </body>
-<link rel="stylesheet" href="css/app.css">
 
 </html>

@@ -17,5 +17,5 @@ window.onload = function () {
     /(?:(?:^|.*;\s*)cookiesStr\s*\=\s*([^;]*).*$)|^.*$/,
     "$1"
   );
-  cookiesStr.innerHTML = results;
+  cookiesStr.innerHTML = results; 
 };
