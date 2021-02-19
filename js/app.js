@@ -122,9 +122,9 @@ function getOneImage(link, parentDiv) {
 /**
  * TASK#10 - get mouse coordinates
  */
-function catchCoordinate(evt) {
-  let xCoord = evt.clientX;
-  let yCoord = evt.clientY;
+window.onmousemove =function(e) {
+  let xCoord = e.clientX;
+  let yCoord = e.clientY;
   document.getElementById('xCoord').innerHTML = 'X: ' + xCoord;
   document.getElementById('yCoord').innerHTML = 'Y: ' + yCoord;
 }
@@ -152,7 +152,7 @@ window.onload = function () {
   results = document.cookie.replace(
     /(?:(?:^|.*;\s*)cookiesStr\s*\=\s*([^;]*).*$)|^.*$/,
     "$1"
-  ); 
+  );
   cookiesStr.innerHTML = results;
 }
 
@@ -193,7 +193,7 @@ let parrentDiv = document.getElementById("parrentDiv");
 let childDiv = document.getElementById("childDiv");
 
 parrentDiv.addEventListener("click", (event) => {
-    alert("Hi, I'm parrent block");
+  alert("Hi, I'm parrent block");
 });
 
 childDiv.addEventListener("click", (event) => {
@@ -210,11 +210,75 @@ let body = document.querySelector("body");
 
 buttonClick.addEventListener("click", (event) => {
   body.classList.add('noScroll');
-  popUp.classList.remove("hidden"); 
+  popUp.classList.remove("hidden");
   event.stopPropagation();
 });
 
 popUp.addEventListener("click", (event) => {
   body.classList.remove('noScroll');
-  popUp.classList.add("hidden"); 
+  popUp.classList.add("hidden");
 });
+
+/**
+ * TASK#18 - drag and drop input file
+ */
+let input = document.getElementById('input__file');
+let nameFile;
+let fileMessage = document.querySelector('.drop');
+let dropZone = document.getElementById("fileUpload");
+const SUCCESS_COLOR = '#58aabb';
+const UNSUCCESS_COLOR = 'red';
+const SUCCESS_BACKGROUND = '#d6eacc';
+const STANDARD_BACKGROUND = '#dcdbdf';
+const DRAGOVER_BACKGROUND = '#eacce5';
+
+//File was chosen
+input.addEventListener('change', function (e) {
+  nameFile = e.target.files[0]?.name;
+  if (nameFile != undefined) {
+    fileMessage.innerText = nameFile;
+    successAddFile(true);
+  }
+});
+//File wasn't chosen
+input.addEventListener('click', function () {
+  nameFile = null;
+  if (nameFile == undefined || nameFile == null) {
+    fileMessage.innerText = "File didn't choose!"
+    successAddFile(false);
+  }
+});
+//File is in drag zone
+dropZone.addEventListener('dragover', function (e) {
+  e.preventDefault();
+  dropZone.style.background = DRAGOVER_BACKGROUND;
+});
+//File out drag zone
+dropZone.addEventListener('dragleave', function (e) {
+  e.preventDefault();
+  dropZone.style.background = STANDARD_BACKGROUND;
+});
+//File put in drag zone
+dropZone.addEventListener('drop', function (e) {
+  e.preventDefault();
+  if (e.dataTransfer.items[0].kind === 'file') {
+    let file = e.dataTransfer.items[0].getAsFile();
+    fileMessage.innerHTML = file.name;
+    successAddFile(true);
+  }
+});
+//Chande styles when file was or wasn/t chossen
+function successAddFile(flag) {
+  flag ? setStyles('fa-cloud-upload-alt', 'fa-file-alt', SUCCESS_COLOR, SUCCESS_BACKGROUND) :
+    setStyles('fa-file-alt', 'fa-cloud-upload-alt', UNSUCCESS_COLOR, STANDARD_BACKGROUND);
+}
+
+//Set styles
+function setStyles(firstClass, secondClass, iconColor, backColor) {
+  let changeIcon = document.getElementById('picFile');
+  changeIcon.classList.remove(firstClass);
+  changeIcon.classList.add(secondClass);
+  fileMessage.style.color = iconColor;
+  changeIcon.style.color = iconColor;
+  dropZone.style.background = backColor;
+}

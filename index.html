@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" onmousemove="catchCoordinate(event)">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -313,7 +313,17 @@
         <div id="task18" class="block_tasks">
           <hr />
           <h2>Task18 - drag and drop input file</h2>
-          <p class="releaseMes">COMING SOON!!!</p>
+          <div class="fileUpload" id="fileUpload">
+            <span class="input__file-icon-wrapper" for="input__file" >
+              <i id="picFile" class="fas fa-cloud-upload-alt"></i>
+              <p class="drop">Drag & drop File Here to Upload<br>or</p>              
+            </span>
+            <input name="file" type="file" name="file" id="input__file" class="input input__file" multiple>
+            <label for="input__file" class="input__file-button">              
+               <span class="input__file-button-text">Browse file</span>
+            </label>
+          </div>
+
           <a href="#tasks">Back to the tasks list</a>
         </div>
 
@@ -321,7 +331,8 @@
       </div>
     </div>
   </section>
-
+  <!--<i class="fas fa-file-download"></i>-->
+  <script src="https://kit.fontawesome.com/e7522be2b2.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="css/app.css">
   <script src="js/app.js"></script>
 </body>
