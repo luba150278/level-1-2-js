@@ -314,17 +314,28 @@
           <hr />
           <h2>Task18 - drag and drop input file</h2>
           <div class="fileUpload" id="fileUpload">
-            <span class="input__file-icon-wrapper" for="input__file" >
+            <span class="input__file-icon-wrapper" for="input__file">
               <i id="picFile" class="fas fa-cloud-upload-alt"></i>
-              <p class="drop">Drag & drop File Here to Upload<br>or</p>              
+              <p class="drop">Drag & drop File Here to Upload<br>or</p>
             </span>
             <input name="file" type="file" name="file" id="input__file" class="input input__file" multiple>
-            <label for="input__file" class="input__file-button">              
-               <span class="input__file-button-text">Browse file</span>
+            <label for="input__file" class="input__file-button">
+              <span class="input__file-button-text">Browse file</span>
             </label>
           </div>
 
           <a href="#tasks">Back to the tasks list</a>
+        </div>
+
+        <div class="part2">
+          <hr>
+          <h2>Read csv, replace text</h2>
+          <textarea id = "cityText">Київ - столиця України</textarea>
+          <div class="chooseCSV">
+            <p class="choose"><input class="choose"  id="fromFile" name="choose" type="radio" checked>Use data from csv-file: <span class="atten">choose csv-file using task18 form</span></p>
+            <p class="choose"><input class="choose" id="default" name="choose" type="radio" >Use default data</p>           
+            <button onclick="readCSV()">start</button>
+          </div>
         </div>
 
         <a id="topButton" class="topButton hidden" href="#top">top</a>

@@ -122,7 +122,7 @@ function getOneImage(link, parentDiv) {
 /**
  * TASK#10 - get mouse coordinates
  */
-window.onmousemove =function(e) {
+window.onmousemove = function (e) {
   let xCoord = e.clientX;
   let yCoord = e.clientY;
   document.getElementById('xCoord').innerHTML = 'X: ' + xCoord;
@@ -231,10 +231,11 @@ const UNSUCCESS_COLOR = 'red';
 const SUCCESS_BACKGROUND = '#d6eacc';
 const STANDARD_BACKGROUND = '#dcdbdf';
 const DRAGOVER_BACKGROUND = '#eacce5';
-
+let file;
 //File was chosen
 input.addEventListener('change', function (e) {
-  nameFile = e.target.files[0]?.name;
+  file = e.target.files[0];
+  nameFile = file.name;
   if (nameFile != undefined) {
     fileMessage.innerText = nameFile;
     successAddFile(true);
@@ -262,7 +263,7 @@ dropZone.addEventListener('dragleave', function (e) {
 dropZone.addEventListener('drop', function (e) {
   e.preventDefault();
   if (e.dataTransfer.items[0].kind === 'file') {
-    let file = e.dataTransfer.items[0].getAsFile();
+    file = e.dataTransfer.items[0].getAsFile();
     fileMessage.innerHTML = file.name;
     successAddFile(true);
   }
@@ -284,16 +285,30 @@ function setStyles(firstClass, secondClass, iconColor, backColor) {
 }
 
 //PART#2
-let file = '/docs/cities.csv';
-
+let csv;
+function readCSV() {
   let reader = new FileReader();
-
   reader.readAsText(file);
+  reader.onload = function () {
+    //console.log(reader.result);
+    csv = reader.result;
+    let cities = csv.split('\n')
+      .filter(s => s.trim() != "" && !s.startsWith("#"))
+      .map(sc => {
+        let s = sc.split(",");
+        return { x: s[0], y: s[1], city: s[2], population: +s[3] }
+      })
+      .sort((a, b) => b.population - a.population)
+      .slice(0, 10)
+      .reduce(function (a, c, number) {
+        a[c.city] = { population: c.population, rating: number };
+        return a;
+      }, {});
 
-  reader.onload = function() {
-    console.log(reader.result);
+    console.log(cities);
   };
 
-  reader.onerror = function() {
+  reader.onerror = function () {
     console.log(reader.error);
   };
+}
