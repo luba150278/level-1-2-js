@@ -285,30 +285,87 @@ function setStyles(firstClass, secondClass, iconColor, backColor) {
 }
 
 //PART#2
+const csvDefault = `49.2333333,28.4833333,Віниця,384840
+48.346432,38.059513,Горлівка,292250
+
+48.45,34.9833333,Дніпро,1080846
+48.0027778,37.8052778,Донецьк,1016194
+50.259749,28.676248,Житомир,284236
+47.853748,35.157139,Запоріжя,815256
+
+47.488911,34.400761,Камяньске,255841
+50.584981,30.235748,Київ,2611327
+48.508389,32.264801,Кіровоград,254103
+47.899726,33.379534,Кривый Ріг,709014
+#dhfkllll;
+48.573269,39.355659,Луганьск,463097
+49.85,24.0166667,Львів,732818
+48.076179,38.068427,Макіївка,389589
+47.1166667,37.55,Маріуполь,492176
+46.9666667,32.0,Миколаїв,514136
+46.4666667,30.7333333,Одеса,1029049
+#fdggfgg
+49.59269,34.551159,Полтава,317998
+44.60000001,33.533333343333,Севастополь,342451
+44.9480556,34.1041667,Сімферополь,343644
+50.910561,34.80566,Сумы,293141
+49.98967,36.208309,Харків,1470902
+46.653368,32.629424,Херсон,328360
+49.4166667,27.0,Хмельницькый,253994
+49.4333333,32.0666667,Черкасы,295414
+51.503653,31.293167,Чернїгів,304994`;
+
 let csv;
+let cities;
+
 function readCSV() {
-  let reader = new FileReader();
-  reader.readAsText(file);
-  reader.onload = function () {
-    //console.log(reader.result);
-    csv = reader.result;
-    let cities = csv.split('\n')
-      .filter(s => s.trim() != "" && !s.startsWith("#"))
-      .map(sc => {
-        let s = sc.split(",");
-        return { x: s[0], y: s[1], city: s[2], population: +s[3] }
-      })
-      .sort((a, b) => b.population - a.population)
-      .slice(0, 10)
-      .reduce(function (a, c, number) {
-        a[c.city] = { population: c.population, rating: number };
-        return a;
-      }, {});
 
-    console.log(cities);
-  };
+  if (document.getElementById('fromFile').checked) {
+    console.log('fsdfsd');
+    let reader = new FileReader();
+    try {
+      reader.readAsText(file);
+      reader.onload = function () {
+        csv = reader.result;
+        cities = getCSVmodification();
+      };
+    } catch {
+       alert('Please, add csv-file');
+    }
+  } else {
+    csv = csvDefault;
+    cities = getCSVmodification();
+  }
+  console.log(cities);
+}
 
-  reader.onerror = function () {
-    console.log(reader.error);
-  };
+function getCSVmodification() {
+  let i =0;
+  let cities = csv.split('\n')
+    .filter(s => s.trim() != "" && !s.startsWith("#"))
+    .map(sc => {
+      let s = sc.split(",");
+      return { x: s[0], y: s[1], city: s[2], population: +s[3] }
+    })
+    .sort((a, b) => b.population - a.population)
+    .slice(0, 10)
+    .reduce(function (a, c, number) {
+      a[c.city] = {population: c.population, rating: number };      
+      return a;
+    }, {});
+ 
+  return cities;
+}
+
+let str;
+function changeText(){
+  let elem = document.getElementById('cityText');
+  str = elem.value;
+  
+  for (let city of Object.keys(cities)) {   
+    let re = new RegExp(city + '(?=\\s|\\.|,|$)', "g");   
+    str = str.replace(re, `${city} (${cities[city].rating + 1} место в ТОП-10 самых крупных городов Украины, население ${cities[city].population} человек)`);
+  }
+  elem.innerHTML = str;
+  return str;
 }
