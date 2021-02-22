@@ -104,7 +104,6 @@ function getImages() {
   let links = document.getElementById('textAreaTask9').value;
   let re = /\s/;
   let linksArray = links.split(re);
-  console.log(linksArray);
   let parentDiv = document.getElementById("images");
 
   for (let i = 0; i < linksArray.length; i++) {
@@ -208,13 +207,13 @@ let buttonClick = document.getElementById("popUpCall");
 let popUp = document.getElementById("popUpWindow");
 let body = document.querySelector("body");
 
-buttonClick.addEventListener("click", (event) => {
+buttonClick.addEventListener("mousedown", (event) => {
   body.classList.add('noScroll');
   popUp.classList.remove("hidden");
   event.stopPropagation();
 });
 
-popUp.addEventListener("click", (event) => {
+popUp.addEventListener("mousedown", (event) => {
   body.classList.remove('noScroll');
   popUp.classList.add("hidden");
 });
@@ -316,56 +315,68 @@ const csvDefault = `49.2333333,28.4833333,Віниця,384840
 51.503653,31.293167,Чернїгів,304994`;
 
 let csv;
-let cities;
-
+//let cities;
+let elem = document.getElementById('cityText');
 function readCSV() {
 
-  if (document.getElementById('fromFile').checked) {
-    console.log('fsdfsd');
+  if (document.getElementById('fromFile').checked) {   
     let reader = new FileReader();
     try {
       reader.readAsText(file);
       reader.onload = function () {
         csv = reader.result;
-        cities = getCSVmodification();
+        cities = csvModife(reader.result);
       };
     } catch {
        alert('Please, add csv-file');
     }
   } else {
     csv = csvDefault;
-    cities = getCSVmodification();
-  }
-  console.log(cities);
-}
+    cities = csvModife(csvDefault);
+  }  
 
-function getCSVmodification() {
-  let i =0;
-  let cities = csv.split('\n')
-    .filter(s => s.trim() != "" && !s.startsWith("#"))
-    .map(sc => {
-      let s = sc.split(",");
-      return { x: s[0], y: s[1], city: s[2], population: +s[3] }
-    })
-    .sort((a, b) => b.population - a.population)
-    .slice(0, 10)
-    .reduce(function (a, c, number) {
-      a[c.city] = {population: c.population, rating: number };      
-      return a;
-    }, {});
  
-  return cities;
+  let str = elem.value;
+  console.log(str);
+  elem.innerHTML = cities(str);
+  console.log(elem.innerHTML + ":"+ cities(str));
 }
 
-let str;
+function csvModife(csv){
+  let cities = csv.split('\n')
+  .filter(s => s.trim() != "" && !s.startsWith("#"))
+  .map(sc => {
+    let s = sc.split(",");
+    return { x: s[0], y: s[1], city: s[2], population: +s[3] }
+  })
+  .sort((a, b) => b.population - a.population)
+  .slice(0, 10)
+  .reduce(function (a, c, number) {
+    a[c.city] = {population: c.population, rating: number };      
+    return a;
+  }, {});
+
+  return (startText) => {
+    //return startText + 'aaaaa';
+    for (let city of Object.keys(cities)) {   
+      //let re = new RegExp(city + '(?=\\s|\\.|,|$)', "g");  
+      let re = new RegExp(city);   
+      startText = startText.replace(re, `${city} (${cities[city].rating + 1} место в ТОП-10 самых крупных городов Украины, население ${cities[city].population} человек)`);
+    }
+    
+    return startText;
+  }
+
+}
+
+
 function changeText(){
   let elem = document.getElementById('cityText');
-  str = elem.value;
-  
-  for (let city of Object.keys(cities)) {   
-    let re = new RegExp(city + '(?=\\s|\\.|,|$)', "g");   
-    str = str.replace(re, `${city} (${cities[city].rating + 1} место в ТОП-10 самых крупных городов Украины, население ${cities[city].population} человек)`);
-  }
-  elem.innerHTML = str;
-  return str;
+  let str = elem.value;
+  elem.innerHTML = cities(str);
+}
+
+function changeText2(){
+  let elem = document.getElementById('cityText');
+  elem.innerHTML = document.getElementById('newText').value;
 }
