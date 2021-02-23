@@ -422,4 +422,8 @@ textarea {
 input.choose {
   margin-right: 5px;
 }
+
+.selectText {
+  font-weight: 700;
+}
 /*# sourceMappingURL=app.css.map */

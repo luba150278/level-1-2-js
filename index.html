@@ -69,6 +69,9 @@
           <li>
             <a href="#task18">Task18 - drag and drop input file</a>
           </li>
+          <li>
+            <a href="#part2">PART2 - change a text on a special phrase</a>
+          </li>
         </ul>
 
         <!--TASK#1-->
@@ -326,31 +329,33 @@
 
           <a href="#tasks">Back to the tasks list</a>
         </div>
-
-        <div class="part2">
+        <!--PART#2-->
+        <div class="part2" id="part2">
           <hr>
           <h2>Read csv, replace text</h2>
           <textarea id="cityText">Київ - столиця України</textarea>
           <div class="chooseCSV">
-            <p class="choose"><input class="choose" id="fromFile" name="choose" type="radio" >Use data from
+            <p class="choose"><input class="choose" id="fromFile" name="choose" type="radio">Use data from
               csv-file: <span class="atten">choose csv-file using task18 form</span></p>
             <p class="choose"><input class="choose" id="default" name="choose" type="radio" checked>Use default data</p>
             <div class="buttons">
-              <button id="loadCSVbutton" onclick="readCSV()">Load CSV-file</button>
-              <button onclick="changeText()">Change text</button>
+              <button id="loadCSVbutton" onclick="readCSV()"><span class="selectText">Step1:</span> Load
+                CSV-file</button>
+              <button onclick="changeText()"><span class="selectText">Step2:</span> Change text</button>
             </div>
           </div>
+          <a href="#tasks">Back to the tasks list</a>
         </div>
 
         <a id="topButton" class="topButton hidden" href="#top">top</a>
       </div>
     </div>
   </section>
- 
+
   <script src="https://kit.fontawesome.com/e7522be2b2.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="css/app.css">
   <script src="js/app.js"></script>
-  
+
 </body>
 
 </html>

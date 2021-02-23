@@ -283,7 +283,13 @@ function setStyles(firstClass, secondClass, iconColor, backColor) {
   dropZone.style.background = backColor;
 }
 
-//PART#2
+/**
+ * PART#2
+ * Text may contain names of Ukrainian cities. Need change city name on the special phrase.
+ * Data to special phrase takes from CSV-file.
+ * User can add CSV-file from add form or can use default data.
+ */
+
 const csvDefault = `49.2333333,28.4833333,Віниця,384840
 48.346432,38.059513,Горлівка,292250
 
@@ -314,61 +320,63 @@ const csvDefault = `49.2333333,28.4833333,Віниця,384840
 49.4333333,32.0666667,Черкасы,295414
 51.503653,31.293167,Чернїгів,304994`;
 
-let csv;
-//let cities;
-
+/**
+ * Select a csv-file and modify it.  
+ */
 function readCSV() {
-
   if (document.getElementById('fromFile').checked) {
     let reader = new FileReader();
     try {
       reader.readAsText(file);
-      reader.onload = function () {
-        csv = reader.result;
+      reader.onload = function () {        
         cities = csvModife(reader.result);
       };
     } catch {
       alert('Please, add csv-file');
     }
   } else {
-    csv = csvDefault;
     cities = csvModife(csvDefault);
   }
-
   document.getElementById('loadCSVbutton').innerText = 'CSV-file was added'
   document.getElementById('loadCSVbutton').style.background = '#1bbc9b'
 }
 
+/**
+ * CSV-file modification. Modification is deleting the empty strings and comments strings from the CSV-file, 
+ * reverse sort by the people population, and cut the file to 10 items.
+ * Returns function which gets a text and replaces it with a special phrase.
+ * @param {*} csv - the start CSV-file
+ */
 function csvModife(csv) {
   let cities = csv.split('\n')
-    .filter(s => s.trim() != "" && !s.startsWith("#"))
+    .filter(s => s.trim() != "" && !s.startsWith("#")) 
     .map(sc => {
       let s = sc.split(",");
-      return [s[0], s[1], s[2], +s[3]]
+      return [s[2], +s[3]]
     })
-    .sort((a, b) => b[3] - a[3])
+    .sort((a, b) => b[1] - a[1])
     .slice(0, 10)
 
-  return (startText) => {
-    let newText = [];
-    startText.split(' ').forEach(
+  return (startText) => {    
+    let result = startText.split(' ').map(
       (word) => {
-        let index = cities.findIndex(item => item[2] == word);
+        let index = cities.findIndex(item => item[0] == word);
         if (index != -1) {
-          newText.push(`${cities[index][2]} (${index + 1} место в ТОП-10 самых крупных городов Украины, население ${cities[index][3]} человек)`);
+          return `${cities[index][0]} (${index + 1} место в ТОП-10 самых крупных городов Украины, население ${cities[index][1]} человек)`;
         } else {
-          newText.push(word);
-        }
-        return newText;
+          return word;
+        }       
       }
     );
-    return newText.join(' ');
+    return result.join(' ');
   }
 }
 
+/**
+ * Changing start text on modification text if it contains city names.
+ */
 function changeText() {
   let elem = document.getElementById('cityText');
   let str = elem.value;
-
   elem.value = cities(str);
 }
