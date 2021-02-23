@@ -330,14 +330,15 @@
         <div class="part2">
           <hr>
           <h2>Read csv, replace text</h2>
-          <textarea id = "cityText">Київ - столиця України</textarea>
-          <textarea id = "newText">Київ - столиця України</textarea>
+          <textarea id="cityText">Київ - столиця України</textarea>
           <div class="chooseCSV">
-            <p class="choose"><input class="choose"  id="fromFile" name="choose" type="radio" checked>Use data from csv-file: <span class="atten">choose csv-file using task18 form</span></p>
-            <p class="choose"><input class="choose" id="default" name="choose" type="radio" >Use default data</p>           
-            <button onclick="readCSV()">Load CSV-file</button>
-            <button onclick="changeText()">Change text</button>
-            <button onclick="changeText2()">Change text</button>
+            <p class="choose"><input class="choose" id="fromFile" name="choose" type="radio" >Use data from
+              csv-file: <span class="atten">choose csv-file using task18 form</span></p>
+            <p class="choose"><input class="choose" id="default" name="choose" type="radio" checked>Use default data</p>
+            <div class="buttons">
+              <button id="loadCSVbutton" onclick="readCSV()">Load CSV-file</button>
+              <button onclick="changeText()">Change text</button>
+            </div>
           </div>
         </div>
 
@@ -345,10 +346,11 @@
       </div>
     </div>
   </section>
-  <!--<i class="fas fa-file-download"></i>-->
+ 
   <script src="https://kit.fontawesome.com/e7522be2b2.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="css/app.css">
   <script src="js/app.js"></script>
+  
 </body>
 
 </html>

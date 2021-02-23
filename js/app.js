@@ -316,10 +316,10 @@ const csvDefault = `49.2333333,28.4833333,Віниця,384840
 
 let csv;
 //let cities;
-let elem = document.getElementById('cityText');
+
 function readCSV() {
 
-  if (document.getElementById('fromFile').checked) {   
+  if (document.getElementById('fromFile').checked) {
     let reader = new FileReader();
     try {
       reader.readAsText(file);
@@ -328,55 +328,47 @@ function readCSV() {
         cities = csvModife(reader.result);
       };
     } catch {
-       alert('Please, add csv-file');
+      alert('Please, add csv-file');
     }
   } else {
     csv = csvDefault;
     cities = csvModife(csvDefault);
-  }  
-
- 
-  let str = elem.value;
-  console.log(str);
-  elem.innerHTML = cities(str);
-  console.log(elem.innerHTML + ":"+ cities(str));
-}
-
-function csvModife(csv){
-  let cities = csv.split('\n')
-  .filter(s => s.trim() != "" && !s.startsWith("#"))
-  .map(sc => {
-    let s = sc.split(",");
-    return { x: s[0], y: s[1], city: s[2], population: +s[3] }
-  })
-  .sort((a, b) => b.population - a.population)
-  .slice(0, 10)
-  .reduce(function (a, c, number) {
-    a[c.city] = {population: c.population, rating: number };      
-    return a;
-  }, {});
-
-  return (startText) => {
-    //return startText + 'aaaaa';
-    for (let city of Object.keys(cities)) {   
-      //let re = new RegExp(city + '(?=\\s|\\.|,|$)', "g");  
-      let re = new RegExp(city);   
-      startText = startText.replace(re, `${city} (${cities[city].rating + 1} место в ТОП-10 самых крупных городов Украины, население ${cities[city].population} человек)`);
-    }
-    
-    return startText;
   }
 
+  document.getElementById('loadCSVbutton').innerText = 'CSV-file was added'
+  document.getElementById('loadCSVbutton').style.background = '#1bbc9b'
 }
 
+function csvModife(csv) {
+  let cities = csv.split('\n')
+    .filter(s => s.trim() != "" && !s.startsWith("#"))
+    .map(sc => {
+      let s = sc.split(",");
+      return [s[0], s[1], s[2], +s[3]]
+    })
+    .sort((a, b) => b[3] - a[3])
+    .slice(0, 10)
 
-function changeText(){
+  return (startText) => {
+    let newText = [];
+    startText.split(' ').forEach(
+      (word) => {
+        let index = cities.findIndex(item => item[2] == word);
+        if (index != -1) {
+          newText.push(`${cities[index][2]} (${index + 1} место в ТОП-10 самых крупных городов Украины, население ${cities[index][3]} человек)`);
+        } else {
+          newText.push(word);
+        }
+        return newText;
+      }
+    );
+    return newText.join(' ');
+  }
+}
+
+function changeText() {
   let elem = document.getElementById('cityText');
   let str = elem.value;
-  elem.innerHTML = cities(str);
-}
 
-function changeText2(){
-  let elem = document.getElementById('cityText');
-  elem.innerHTML = document.getElementById('newText').value;
+  elem.value = cities(str);
 }
