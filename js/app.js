@@ -350,8 +350,8 @@ function readCSV() {
 function csvModife(csv) {
   let cities = csv.split('\n')
     .filter(s => s.trim() != "" && !s.startsWith("#")) 
-    .map(sc => {
-      let s = sc.split(",");
+    .map(arr => {
+      let s = arr.split(",");
       return [s[2], +s[3]]
     })
     .sort((a, b) => b[1] - a[1])
